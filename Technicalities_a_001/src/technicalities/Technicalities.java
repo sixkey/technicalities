@@ -11,17 +11,25 @@ import SixGen.Game.GameLoop;
 import SixGen.Window.CanvasManager;
 import SixGen.Window.SixCanvas;
 import canvases.MainCanvas;
+import variables.globals.GlobalVariables;
 import variables.idls.CIDL;
 
 /**
- *
+ * Technicalities
+ * 
+ * - Game wrapper, starter and main method container
+ * 
  * @author filip
  */
 public class Technicalities extends Game {
     
+    ////// CONSTRUCTORS //////
+    
     public Technicalities() { 
-        super(GameLoop.GameLoopType.singleThread, 1600, 900, "technicalities", true, 60, 60);
+        super(GameLoop.GameLoopType.singleThread, GlobalVariables.SCREENWIDTH, GlobalVariables.SCREENHEIGHT, GlobalVariables.TITLE,true, 60, 60);
     }
+
+    ////// METHODS //////
     
     @Override
     public void canvInit(CanvasManager canvMan) {

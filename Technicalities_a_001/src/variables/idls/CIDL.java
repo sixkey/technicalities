@@ -9,7 +9,10 @@ package variables.idls;
 import SixGen.Utils.ID;
 
 /**
- *
+ * CIDL
+ * 
+ * - Canvas ID List
+ * 
  * @author filip
  */
 public enum CIDL implements ID {

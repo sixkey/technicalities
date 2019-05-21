@@ -96,34 +96,32 @@ public class BasicIsoMovement extends SixAbstractKeyListener {
     public void sixKeyPressed(KeyEvent e) {
         //@sixKeyPressed
         if(target!=null) {
-            if (target.getHandled()) {
-                for (int i = 0; i < button.length; i++) {
-                    if (button[i] == e.getKeyCode()) {
-                        pressed[i] = true;
-                    }
+            for (int i = 0; i < button.length; i++) {
+                if (button[i] == e.getKeyCode()) {
+                    pressed[i] = true;
                 }
-                //@sixKeyPressed#leftButtonCheck
-                if (pressed[0] && !active[0]) {
-                    active[0] = true;
-                    target.setVelX(target.getVelX() + (-1 * speedX));
-                }
-                //@sixKeyPressed#rightButtonCheck
-                if (pressed[1] && !active[1]) {
-                    active[1] = true;
-                    target.setVelX(target.getVelX() + (speedX));
-                }
-                //@sixKeyPressed#upButtonCheck
-                if (pressed[2] && !active[2]) {
-                    active[2] = true;
-                    target.setVelY(target.getVelY() - speedY);
-                }
-                //@sixKeyPressed#downButtonCheck
-                if (pressed[3] && !active[3]) {
-                    active[3] = true;
-                    target.setVelY(target.getVelY() + (speedY));
-                }
-                target.keyAction(e , KeyActionType.pressed);
             }
+            //@sixKeyPressed#leftButtonCheck
+            if (pressed[0] && !active[0]) {
+                active[0] = true;
+                target.setVelX(target.getVelX() + (-1 * speedX));
+            }
+            //@sixKeyPressed#rightButtonCheck
+            if (pressed[1] && !active[1]) {
+                active[1] = true;
+                target.setVelX(target.getVelX() + (speedX));
+            }
+            //@sixKeyPressed#upButtonCheck
+            if (pressed[2] && !active[2]) {
+                active[2] = true;
+                target.setVelY(target.getVelY() - speedY);
+            }
+            //@sixKeyPressed#downButtonCheck
+            if (pressed[3] && !active[3]) {
+                active[3] = true;
+                target.setVelY(target.getVelY() + (speedY));
+            }
+            target.keyAction(e , KeyActionType.pressed);
         }
     }
 
@@ -131,34 +129,32 @@ public class BasicIsoMovement extends SixAbstractKeyListener {
     public void sixKeyReleased(KeyEvent e) {
         //@sixKeyReleased
         if(target!=null) { 
-            if (target.getHandled()) {
-                for (int i = 0; i < button.length; i++) {
-                    if (button[i] == e.getKeyCode()) {
-                        pressed[i] = false;
-                    }
+            for (int i = 0; i < button.length; i++) {
+                if (button[i] == e.getKeyCode()) {
+                    pressed[i] = false;
                 }
-                //@sixKeyReleased#leftButtonCheck
-                if (!pressed[0] && active[0]) {
-                    active[0] = false;
-                    target.setVelX(target.getVelX() + speedX);
-                }
-                //@sixKeyReleased#rightButtonCheck
-                if (!pressed[1] && active[1]) {
-                    active[1] = false;
-                    target.setVelX(target.getVelX() - speedX);
-                }
-                //@sixKeyReleased#upButtonCheck
-                if (!pressed[2] && active[2]) {
-                    active[2] = false;
-                    target.setVelY(target.getVelY() + speedX);
-                }
-                //@sixKeyReleased#downButtonCheck
-                if (!pressed[3] && active[3]) {
-                    active[3] = false;
-                    target.setVelY(target.getVelY() - speedX);
-                }
-                target.keyAction(e , KeyActionType.released);
             }
+            //@sixKeyReleased#leftButtonCheck
+            if (!pressed[0] && active[0]) {
+                active[0] = false;
+                target.setVelX(target.getVelX() + speedX);
+            }
+            //@sixKeyReleased#rightButtonCheck
+            if (!pressed[1] && active[1]) {
+                active[1] = false;
+                target.setVelX(target.getVelX() - speedX);
+            }
+            //@sixKeyReleased#upButtonCheck
+            if (!pressed[2] && active[2]) {
+                active[2] = false;
+                target.setVelY(target.getVelY() + speedX);
+            }
+            //@sixKeyReleased#downButtonCheck
+            if (!pressed[3] && active[3]) {
+                active[3] = false;
+                target.setVelY(target.getVelY() - speedX);
+            }
+            target.keyAction(e , KeyActionType.released);
         }
     }
 

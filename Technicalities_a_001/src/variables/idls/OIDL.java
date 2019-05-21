@@ -9,7 +9,10 @@ package variables.idls;
 import SixGen.Utils.ID;
 
 /**
- *
+ * OIDL
+ * 
+ * - Object ID List
+ * 
  * @author filip
  */
 public enum OIDL implements ID{

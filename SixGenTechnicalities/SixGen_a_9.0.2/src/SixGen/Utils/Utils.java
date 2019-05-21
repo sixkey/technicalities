@@ -770,6 +770,20 @@ public abstract class Utils {
         max = (int) clamp(0, 255, max);
         return new Color(r.nextInt(max - min) + min, r.nextInt(max - min) + min, r.nextInt(max - min) + min);
     }
+    public Color randomColor(int minr, int maxr, int ming, int maxg, int minb, int maxb) {
+        Random r = new Random();
+        
+        minr = (int) clamp(0, 255, minr);
+        maxr = (int) clamp(0, 255, maxr);
+        
+        ming = (int) clamp(0, 255, ming);
+        maxg = (int) clamp(0, 255, maxg);
+        
+        minb = (int) clamp(0, 255, minb);
+        maxb = (int) clamp(0, 255, maxb);
+        
+        return new Color(r.nextInt(maxr - minr) + minr, r.nextInt(maxg - ming) + ming, r.nextInt(maxb - minb) + minb);
+    }
 
     public Color addBrightness(Color color, int brightness) {
         return clampedColor(color.getRed() + brightness, color.getGreen() + brightness, color.getBlue() + brightness);
