@@ -12,6 +12,7 @@ import SixGen.Game.Game;
 import SixGen.Handler.Handler.RenderType;
 import SixGen.Window.Camera;
 import SixGen.Window.SixCanvas;
+import inventory.storage.Storage;
 import variables.idls.CIDL;
 import world.World;
 import world.handler.TechHandler;
@@ -61,7 +62,6 @@ public class MainCanvas extends SixCanvas {
         //movement 
         BasicIsoMovement BIM = new BasicIsoMovement(this, player, SixAbstractKeyListener.KeyDefaultsType.wasd, 5, 5);
         this.addKeyListener(BIM);
-        
     }
     
 }

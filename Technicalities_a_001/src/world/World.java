@@ -7,6 +7,7 @@
 package world;
 
 import SixGen.Utils.Utils;
+import variables.globals.GlobalVariables;
 import world.handler.TechHandler;
 import world.structure.Layer;
 import world.structure.Tile;
@@ -19,7 +20,7 @@ import world.structure.Tile;
  * 
  * @author filip
  */
-public class World {
+public class World implements GlobalVariables {
     
     ////// VARIABLES //////
     public TechHandler handler;
@@ -54,6 +55,14 @@ public class World {
         }
         
         return layer;
+    }
+    
+    ////// GETTERS SETTERS //////   
+    public int getTileX(Tile tile) { 
+        return tile.x * TILEWIDTH;
+    }
+    public int getTileY(Tile tile) { 
+        return tile.y * TILEHEIGHT;
     }
     
     

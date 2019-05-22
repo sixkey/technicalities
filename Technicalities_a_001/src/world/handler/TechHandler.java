@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import variables.globals.GlobalVariables;
 import world.objects.TObject;
 import world.objects.Tickable;
+import world.objects.standable.Standable;
 import world.structure.Layer;
 import world.structure.Tile;
 
@@ -45,6 +46,7 @@ public class TechHandler extends Handler implements GlobalVariables{
     
     @Override 
     public void render(Graphics2D g) { 
+        // getting coridnates 
         int xb, yb, xe, ye;
         
         xb = (int)(camera.getX() / TILEWIDTH) - 1;
@@ -57,11 +59,19 @@ public class TechHandler extends Handler implements GlobalVariables{
         yb = Math.min(layer.width, Math.max(0, yb));
         ye = Math.min(layer.width, Math.max(0, ye));
         
+        //rendering visible tiles
         for(int y = yb; y < ye; y++) { 
             for(int x = xb; x < xe; x++) { 
                 Tile t = layer.tiles[y][x];
+                //rendering tile
                 g.setColor(t.color);
                 g.fillRect(x * TILEWIDTH, y * TILEHEIGHT, TILEWIDTH, TILEHEIGHT);
+                //rendering standable 
+                Standable s = t.getStandable();
+                if(s!=null) { 
+                    g.setColor(t.color);
+                    g.fillRect(x * TILEWIDTH, y * TILEHEIGHT, TILEWIDTH, TILEHEIGHT);
+                }
             }
         }
         

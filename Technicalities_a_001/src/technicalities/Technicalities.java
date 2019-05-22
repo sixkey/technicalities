@@ -8,9 +8,15 @@ package technicalities;
 
 import SixGen.Game.Game;
 import SixGen.Game.GameLoop;
+import SixGen.Utils.Files.FileManager;
 import SixGen.Window.CanvasManager;
 import SixGen.Window.SixCanvas;
 import canvases.MainCanvas;
+import configmanagers.items.ItemConfigManager;
+import configmanagers.items.ItemWrapper;
+import configmanagers.nature.NatureConfigManager;
+import inventory.item.Item;
+import inventory.storage.Storage;
 import variables.globals.GlobalVariables;
 import variables.idls.CIDL;
 
@@ -33,6 +39,14 @@ public class Technicalities extends Game {
     
     @Override
     public void canvInit(CanvasManager canvMan) {
+        
+        FileManager fm = new FileManager();
+        
+        //item config
+        ItemConfigManager ICM = new ItemConfigManager(fm.getFileFromClassSource(getClass(), "/configs/items.tcf"));
+        //nature config 
+        NatureConfigManager NCM = new NatureConfigManager(fm.getFileFromClassSource(getClass(), "/configs/nature.tcf"));
+        
         MainCanvas mainCanvas = new MainCanvas(this);
         SixCanvas[] canvases = {mainCanvas};
         canvMan.setCanvases(canvases);

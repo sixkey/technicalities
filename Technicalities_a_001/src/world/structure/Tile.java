@@ -7,6 +7,8 @@
 package world.structure;
 
 import java.awt.Color;
+import variables.globals.GlobalVariables;
+import world.objects.standable.Standable;
 
 /**
  * Tile
@@ -15,23 +17,36 @@ import java.awt.Color;
  * 
  * @author filip
  */
-public class Tile {
+public class Tile implements GlobalVariables{
     
     ////// VARIABLES //////
     
     // tile based cordinates - in map, not in space
     public int x, y;
+    // real cordinates of the tile
+    public int rx, ry;
+    // real dimensions 
+    public int width, height;
     
     // tile bg color
     public Color color;
     // int id to the texture 
     public int TID;
     
+    // object standing on the tile
+    public Standable standable;
+    
     ////// CONSTRUCTORS //////
     
     public Tile(int x, int y) {
         this.x = x;
         this.y = y;
+        
+        this.rx = x * TILEWIDTH;
+        this.ry = y * TILEHEIGHT;
+        
+        this.width = TILEWIDTH;
+        this.height = TILEHEIGHT;
     }
     
     ////// METHODS //////
@@ -40,6 +55,14 @@ public class Tile {
     
     public void setColor(Color color) { 
         this.color = color;
+    }
+    
+    public void setStandable(Standable standable) { 
+        this.standable = standable;
+    }
+    
+    public Standable getStandable() { 
+        return standable;
     }
     
 }
