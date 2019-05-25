@@ -18,10 +18,6 @@ public class NatureWrapper implements ConfigWrapper {
     
     //id - name of the item in id form
     public final String id;
-    //name of the texture set of items
-    public final String set;
-    //Texture ID - pointer to the textureset
-    public final int TID;
     //id of the items stored
     public final String[] itemID;
     //amount of the items stored
@@ -35,10 +31,8 @@ public class NatureWrapper implements ConfigWrapper {
      * @param itemID id of the items stored
      * @param itemAmount amount of the items stored
      */
-    public NatureWrapper(String id, String set, int TID, String[] itemID, int[] itemAmount) { 
+    public NatureWrapper(String id, String[] itemID, int[] itemAmount) { 
         this.id = id;
-        this.set = set;
-        this.TID = TID;
         this.itemID = itemID;
         this.itemAmount = itemAmount;
     }

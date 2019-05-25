@@ -8,6 +8,7 @@ package world.handler;
 
 import SixGen.Handler.Handler;
 import SixGen.Window.SixCanvas;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import variables.globals.GlobalVariables;
@@ -69,8 +70,8 @@ public class TechHandler extends Handler implements GlobalVariables{
                 //rendering standable 
                 Standable s = t.getStandable();
                 if(s!=null) { 
-                    g.setColor(t.color);
-                    g.fillRect(x * TILEWIDTH, y * TILEHEIGHT, TILEWIDTH, TILEHEIGHT);
+                    g.setColor(Color.red);
+                    g.fillRect(x * TILEWIDTH + 10, y * TILEHEIGHT + 10, TILEWIDTH - 20, TILEHEIGHT - 20);
                 }
             }
         }

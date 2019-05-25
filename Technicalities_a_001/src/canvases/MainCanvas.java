@@ -48,7 +48,7 @@ public class MainCanvas extends SixCanvas {
         //// world init 
         World world = new World(handler);
         // spawn world
-        Layer layer = world.spawnLayer(1000, 1000);
+        Layer layer = world.spawnLayer(64, 64);
         handler.setLayer(layer);
         
         //// player init 

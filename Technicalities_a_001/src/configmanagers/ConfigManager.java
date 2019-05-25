@@ -31,7 +31,11 @@ public abstract class ConfigManager {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(configFile))) {
             String line = br.readLine();
             while (line != null) {
-                hTypesList.add(stringToWrapper(line));
+                ConfigWrapper wrapper = stringToWrapper(line);
+                if(wrapper!=null) {
+                    hTypesList.add(wrapper);
+                }
+                
                 line = br.readLine();
             }
         } catch (IOException ex) {

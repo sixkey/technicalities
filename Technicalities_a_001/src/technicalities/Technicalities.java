@@ -12,11 +12,10 @@ import SixGen.Utils.Files.FileManager;
 import SixGen.Window.CanvasManager;
 import SixGen.Window.SixCanvas;
 import canvases.MainCanvas;
+import configmanagers.bioms.BiomConfigManager;
 import configmanagers.items.ItemConfigManager;
-import configmanagers.items.ItemWrapper;
 import configmanagers.nature.NatureConfigManager;
-import inventory.item.Item;
-import inventory.storage.Storage;
+import ui.TechTexManager;
 import variables.globals.GlobalVariables;
 import variables.idls.CIDL;
 
@@ -28,6 +27,14 @@ import variables.idls.CIDL;
  * @author filip
  */
 public class Technicalities extends Game {
+    
+    ////// VARIABLES //////
+    
+    public static ItemConfigManager ICM;
+    public static NatureConfigManager NCM;
+    public static BiomConfigManager BCM;
+    
+    public static TechTexManager TTM;
     
     ////// CONSTRUCTORS //////
     
@@ -43,9 +50,13 @@ public class Technicalities extends Game {
         FileManager fm = new FileManager();
         
         //item config
-        ItemConfigManager ICM = new ItemConfigManager(fm.getFileFromClassSource(getClass(), "/configs/items.tcf"));
+        ICM = new ItemConfigManager(fm.getFileFromClassSource(getClass(), "/configs/items.tcf"));
         //nature config 
-        NatureConfigManager NCM = new NatureConfigManager(fm.getFileFromClassSource(getClass(), "/configs/nature.tcf"));
+        NCM = new NatureConfigManager(fm.getFileFromClassSource(getClass(), "/configs/nature.tcf"));
+        //biom config
+        BCM = new BiomConfigManager(fm.getFileFromClassSource(getClass(), "/configs/bioms.tcf"));
+        
+        TTM = new TechTexManager();
         
         MainCanvas mainCanvas = new MainCanvas(this);
         SixCanvas[] canvases = {mainCanvas};

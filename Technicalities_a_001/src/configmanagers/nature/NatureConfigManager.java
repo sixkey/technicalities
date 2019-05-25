@@ -35,11 +35,7 @@ public class NatureConfigManager extends ConfigManager {
         
         String id = words[0];
         
-        String[] textureInfo = words[1].split(":");
-        String set = textureInfo[0];
-        int TID = Integer.parseInt(textureInfo[1]);
-        
-        String[] resources = words[2].split(",");
+        String[] resources = words[1].split(",");
         String[] itemID = new String[resources.length];
         int[] itemAmount = new int[resources.length];
         
@@ -49,7 +45,7 @@ public class NatureConfigManager extends ConfigManager {
             itemAmount[i] = Integer.parseInt(inf[1]);
         }
         
-        return new NatureWrapper(id, set, TID, itemID, itemAmount);
+        return new NatureWrapper(id, itemID, itemAmount);
     }
     
 }

@@ -6,13 +6,23 @@
  */
 package world.objects.standable;
 
+import configmanagers.nature.NatureWrapper;
+import variables.idls.OIDL;
+import world.World;
+import world.structure.Tile;
+
 /**
  * Nature
  * - objects that are created from NatureWrapper
  * @author filip
  */
-public class Nature {
+public class Nature extends Standable{
+ 
+    public NatureWrapper natureWrapper;
     
-    
+    public Nature(NatureWrapper natureWrapper, Tile tile, World world) { 
+        super(tile, world, OIDL.nature);
+        this.natureWrapper = natureWrapper;
+    }
     
 }

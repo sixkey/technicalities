@@ -3,10 +3,10 @@ package SixGen.Texture;
 import java.awt.image.BufferedImage;
 
 public class SpriteSheet {
-	private BufferedImage image;
-	private int columns , rows;
-	private int parcelWidth , parcelHeight;
-	private String title;
+	protected BufferedImage image;
+	protected int columns , rows;
+	protected int parcelWidth , parcelHeight;
+	protected String title;
 	
 	public SpriteSheet(BufferedImage image, String title) { 
 		this.image = image;
@@ -20,10 +20,12 @@ public class SpriteSheet {
 		this.title = title;
 		this.columns = columns;
 		this.rows = rows;
-		updateParcelBounds();
+                if(image!=null) {
+                    updateParcelBounds();
+                }
 	}
-	private void updateParcelBounds() { 
-		parcelWidth = image .getWidth()/columns;
+	protected void updateParcelBounds() { 
+		parcelWidth = image.getWidth()/columns;
 		parcelHeight = image.getHeight()/rows;
 	}
         public BufferedImage[] getTextures() { 

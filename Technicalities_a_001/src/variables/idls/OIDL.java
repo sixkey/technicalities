@@ -16,5 +16,6 @@ import SixGen.Utils.ID;
  * @author filip
  */
 public enum OIDL implements ID{
-    player
+    player,
+    nature
 }
