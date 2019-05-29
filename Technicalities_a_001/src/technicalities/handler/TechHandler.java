@@ -16,7 +16,7 @@ import technicalities.variables.globals.GlobalVariables;
 import technicalities.world.objects.TObject;
 import technicalities.world.objects.Tickable;
 import technicalities.world.objects.standable.Standable;
-import technicalities.world.structure.Layer;
+import technicalities.world.structure.Chunk;
 import technicalities.world.structure.Tile;
 
 /**
@@ -31,7 +31,7 @@ public class TechHandler extends Handler implements GlobalVariables{
     
     ////// VARIABLES //////
     
-    private Layer layer;
+    private Chunk chunks[][];
     
     private ArrayList<Tickable> tickables;
     private ArrayList<TObject> objects;
@@ -51,68 +51,56 @@ public class TechHandler extends Handler implements GlobalVariables{
         // getting coridnates 
         int xb, yb, xe, ye;
         
-        xb = (int)(camera.getX() / TILEWIDTH) - 3;
-        xe = (int)((camera.getX() + camera.getWidth()) / TILEWIDTH) + 3;
-        yb = (int)(camera.getY() / TILEHEIGHT) - 3;
-        ye = (int)((camera.getY() + camera.getHeight()) / TILEHEIGHT) + 3;
+        xb = (int)(camera.getX() / CHUNKSIZE) - 2;
+        xe = (int)((camera.getX() + camera.getWidth()) / CHUNKSIZE) + 2;
+        yb = (int)(camera.getY() / CHUNKSIZE) - 2;
+        ye = (int)((camera.getY() + camera.getHeight()) / CHUNKSIZE) + 2;
         
-        xb = Math.min(layer.width, Math.max(0, xb));
-        xe = Math.min(layer.width, Math.max(0, xe));
-        yb = Math.min(layer.width, Math.max(0, yb));
-        ye = Math.min(layer.width, Math.max(0, ye));
+        xb = Math.min(chunks.length, Math.max(0, xb));
+        xe = Math.min(chunks.length, Math.max(0, xe));
+        yb = Math.min(chunks[0].length, Math.max(0, yb));
+        ye = Math.min(chunks[0].length, Math.max(0, ye));
         
         //rendering visible tiles
         for(int y = yb; y < ye; y++) { 
             for(int x = xb; x < xe; x++) { 
-                Tile t = layer.tiles[y][x];
-                //rendering tile
-                g.setColor(t.color);
-                g.fillRect(x * TILEWIDTH, y * TILEHEIGHT, TILEWIDTH, TILEHEIGHT);
-            }
-            for(int i = 0; i < objects.size(); i++) { 
-                TObject temp = objects.get(i);
-                if(Math.floorDiv((int)temp.getCenterY() + TILEHEIGHT / 2, TILEHEIGHT) == y) {
-                    temp.render(g);
-                }
-            }
-            //rendering standable 
-            for(int x = xb; x < xe; x++) { 
-                Tile t = layer.tiles[y][x];
-                Standable s = t.getStandable();
-                if(s!=null) { 
-                    BufferedImage tex = s.getTexture();
-                    if(tex!=null) { 
-                        g.drawImage(tex, x*TILEWIDTH + TILEWIDTH / 2 - tex.getWidth() / 2, y*TILEHEIGHT + TILEHEIGHT / 2 - tex.getHeight(), null);
-                    } else { 
-                        g.setColor(Color.red);
-                        g.fillRect(x * TILEWIDTH + 10, y * TILEHEIGHT +10, TILEWIDTH - 20, TILEHEIGHT -20);
-                    }
-                    if(s.getTUI()!=null) { 
-                        s.getTUI().render(g);
-                    }
-                }
+                chunks[y][x].render(g);
             }
         }
-        
-        
-        
-        
+        //rendering objects and standables
+        for(int y = yb; y < ye; y++) { 
+            for(int x = xb; x < xe; x++) { 
+                chunks[y][x].frontRender(g);
+            }
+        }
     }
     
     @Override
     public void tick() {  
-        for(int i = 0; i < tickables.size(); i++) { 
-            tickables.get(i).tick();
-        }
-        for(int i = 0; i < objects.size(); i++) { 
-            objects.get(i).tick();
+        int xb, yb, xe, ye;
+        
+        xb = (int)(camera.getX() / CHUNKSIZE) - 2;
+        xe = (int)((camera.getX() + camera.getWidth()) / CHUNKSIZE) + 2;
+        yb = (int)(camera.getY() / CHUNKSIZE) - 2;
+        ye = (int)((camera.getY() + camera.getHeight()) / CHUNKSIZE) + 2;
+        
+        xb = Math.min(chunks.length, Math.max(0, xb));
+        xe = Math.min(chunks.length, Math.max(0, xe));
+        yb = Math.min(chunks[0].length, Math.max(0, yb));
+        ye = Math.min(chunks[0].length, Math.max(0, ye));
+        
+        //rendering visible tiles
+        for(int y = yb; y < ye; y++) { 
+            for(int x = xb; x < xe; x++) { 
+                chunks[y][x].tick();
+            }
         }
     }
     
     ////// GETTERS SETTERS ////// 
     
-    public void setLayer(Layer layer) { 
-        this.layer = layer;
+    public void setChunks(Chunk[][] chunks) { 
+        this.chunks = chunks;
     }
     
     public void addTickable(Tickable t) { 
@@ -120,12 +108,20 @@ public class TechHandler extends Handler implements GlobalVariables{
     }
     
     public void addObject(TObject o) { 
-        objects.add(o);
+        int cy = Math.floorDiv((int)o.getCenterY(), CHUNKSIZE);
+        int cx = Math.floorDiv((int)o.getCenterX(), CHUNKSIZE);
+        System.out.println(cy + " " + cx);
+        
+        chunks[cy][cx].addObject(o);
     }
     
-    public Tile getTile(int x, int y) { 
-        if(x >= 0 && x < layer.width && y >= 0 && y < layer.height) {
-            return layer.getTile(x, y);
+    public Tile getTile(int x, int y) {
+        if(x < 0 || y < 0) return null;
+        int cx = x / TILESINCHUNK;
+        int cy = y / TILESINCHUNK;
+        
+        if(cx >= 0 && cx < chunks[0].length && cy >=0 && cy < chunks[1].length) { 
+            return chunks[cy][cx].getTile(x%TILESINCHUNK, y%TILESINCHUNK);
         } else { 
             return null;
         }

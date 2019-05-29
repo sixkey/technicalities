@@ -18,8 +18,10 @@ import java.awt.event.MouseEvent;
 import technicalities.variables.idls.CIDL;
 import technicalities.world.World;
 import technicalities.handler.TechHandler;
+import technicalities.variables.globals.GlobalVariables;
+import static technicalities.variables.globals.GlobalVariables.WORLDSIZE;
 import technicalities.world.objects.creatures.player.Player;
-import technicalities.world.structure.Layer;
+import technicalities.world.structure.Chunk;
 import technicalities.world.structure.Tile;
 
 /**
@@ -29,7 +31,7 @@ import technicalities.world.structure.Tile;
  * 
  * @author filip
  */
-public class MainCanvas extends SixCanvas {
+public class MainCanvas extends SixCanvas implements GlobalVariables{
     
     ////// VARIABLES ////// 
     private Player player;
@@ -55,8 +57,8 @@ public class MainCanvas extends SixCanvas {
         //// world init 
         world = new World(handler);
         // spawn world
-        Layer layer = world.spawnLayer(640, 640);
-        handler.setLayer(layer);
+        Chunk[][] chunks = world.spawnLayer(WORLDSIZE, WORLDSIZE);
+        handler.setChunks(chunks);
         
         //// player init 
         player = new Player(200, 200, world);

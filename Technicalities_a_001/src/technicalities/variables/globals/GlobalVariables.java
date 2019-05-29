@@ -17,9 +17,12 @@ public interface GlobalVariables {
     final String TITLE = "technicalities";
     
     ///// WORLD  /////
-    
     // TILES //
     final int TILEWIDTH = 64, TILEHEIGHT = 64;
+    // HANDLER //
+    final int WORLDSIZE = 3; //number^2 of chunks in world 
+    final int TILESINCHUNK = 16; //number of tiles in chunk
+    final int CHUNKSIZE = TILESINCHUNK * TILEWIDTH;
     // PLAYER //
     final int PLAYER_SIZE = 32;
     

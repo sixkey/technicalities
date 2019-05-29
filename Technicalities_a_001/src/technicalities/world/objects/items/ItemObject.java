@@ -29,7 +29,7 @@ public class ItemObject extends TObject{
     @Override
     public void render(Graphics2D g) { 
         if(sprite!=null) { 
-            g.drawImage(sprite, (int)centerX-sprite.getWidth() / 2, (int)centerY-sprite.getHeight(), null);
+            g.drawImage(sprite, (int)centerX-sprite.getWidth() / 2, (int)centerY-sprite.getHeight()/2, null);
         }
     }
     

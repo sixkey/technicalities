@@ -21,7 +21,7 @@ import technicalities.world.generators.BiomMapGenerator;
 import technicalities.handler.TechHandler;
 import technicalities.world.objects.items.ItemObject;
 import technicalities.world.objects.standable.Nature;
-import technicalities.world.structure.Layer;
+import technicalities.world.structure.Chunk;
 import technicalities.world.structure.Tile;
 
 /**
@@ -55,12 +55,23 @@ public class World implements GlobalVariables {
     
     /**
      * creates and returns layer 
-     * @param width layer's width
-     * @param height layer's height 
+     * @param width worlds width in chunks
+     * @param height worlds height in chunks
      * @return 
      */
-    public Layer spawnLayer(int width, int height) { 
-        Layer layer = new Layer(width, height);
+    public Chunk[][] spawnLayer(int widthInChunks, int heightInChunks) { 
+        
+        int width = widthInChunks * TILESINCHUNK;
+        int height = heightInChunks * TILESINCHUNK;
+        
+        Chunk[][] chunks = new Chunk[heightInChunks][];
+        for(int y = 0; y < chunks.length; y++) { 
+            chunks[y] = new Chunk[widthInChunks];
+            for(int x = 0; x < chunks[y].length; x++) { 
+                chunks[y][x] = new Chunk(handler, x, y, TILESINCHUNK, TILESINCHUNK);
+            }
+        }
+        
         
         Utils utils = new Utils() {};
         
@@ -70,7 +81,7 @@ public class World implements GlobalVariables {
             for(int x = 0; x < width; x++) { 
                 Tile t = new Tile(x, y);
                 t.setColor(biommap[y][x] != 0 ? new Color(biommap[y][x]) : utils.randomColor(100,101,180,200,100,101));
-                layer.tiles[y][x] = t;
+                chunks[y / TILESINCHUNK][x / TILESINCHUNK].tiles[y % TILESINCHUNK][x % TILESINCHUNK] = t;
             }
         }
         
@@ -82,11 +93,10 @@ public class World implements GlobalVariables {
             IDNumberPair[] npc = w.naturePerChunk;
             for(IDNumberPair p : npc) { 
                 System.out.println(p.id);
-                
                 for(int j = 0; j < (width*height*p.amount)/256; j++) { 
                     int nx = random.nextInt(width);
                     int ny = random.nextInt(height);
-                    Tile temp = layer.tiles[ny][nx];
+                    Tile temp = chunks[ny / TILESINCHUNK][nx / TILESINCHUNK].tiles[ny % TILESINCHUNK][nx % TILESINCHUNK];
                     if(temp.color.getRGB() == new Color(w.color).getRGB()) { 
                         Nature nature = new Nature((NatureWrapper)NCM.getWrapper(p.id), temp, this);
                         nature.setTexture(technicalities.Technicalities.TTM.getRandomTexture(p.id));
@@ -96,7 +106,7 @@ public class World implements GlobalVariables {
             }
         }
         
-        return layer;
+        return chunks;
     }
     
     /**
