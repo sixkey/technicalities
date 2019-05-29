@@ -55,8 +55,8 @@ public class SpriteSheet {
             return textures;
         }
 	public BufferedImage getTexture(int column, int row) { 
-		BufferedImage result = image.getSubimage((int)column * parcelWidth, (int)row*parcelHeight , (int)parcelWidth, (int)parcelHeight);
-		return result;
+            BufferedImage result = image.getSubimage((int)column * parcelWidth, (int)row * parcelHeight , (int)parcelWidth, (int)parcelHeight);
+            return result;
 	}
 	public BufferedImage getTexture(float x , float y , float width , float height) { 
 		BufferedImage result = image.getSubimage((int)x, (int)y, (int)width, (int)height);

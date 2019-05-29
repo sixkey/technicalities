@@ -1,3 +1,4 @@
-wood basic_items:0 64 wood,fuel
-leaf basic_items:1 64 fuel
-andezit basic_items:2 64 stone
+i_wood 64 wood,fuel
+i_leaf 64 fuel
+i_andezit 64 stone
+i_spikes 64 wood,fuel 

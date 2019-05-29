@@ -11,13 +11,13 @@ import SixGen.Game.GameLoop;
 import SixGen.Utils.Files.FileManager;
 import SixGen.Window.CanvasManager;
 import SixGen.Window.SixCanvas;
-import canvases.MainCanvas;
-import configmanagers.bioms.BiomConfigManager;
-import configmanagers.items.ItemConfigManager;
-import configmanagers.nature.NatureConfigManager;
-import ui.TechTexManager;
-import variables.globals.GlobalVariables;
-import variables.idls.CIDL;
+import technicalities.canvases.MainCanvas;
+import technicalities.configmanagers.bioms.BiomConfigManager;
+import technicalities.configmanagers.items.ItemConfigManager;
+import technicalities.configmanagers.nature.NatureConfigManager;
+import technicalities.ui.TechTexManager;
+import technicalities.variables.globals.GlobalVariables;
+import technicalities.variables.idls.CIDL;
 
 /**
  * Technicalities

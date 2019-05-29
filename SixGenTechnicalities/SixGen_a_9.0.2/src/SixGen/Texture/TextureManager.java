@@ -21,8 +21,8 @@ import static javax.swing.UIManager.get;
 
 public class TextureManager extends Utils{
 
-    LinkedList<SpriteSheet> spriteSheets = new LinkedList<SpriteSheet>();
-    LinkedList<BufferedImage[]> texturesSets = new LinkedList<BufferedImage[]>();
+    protected LinkedList<SpriteSheet> spriteSheets = new LinkedList<SpriteSheet>();
+    protected LinkedList<BufferedImage[]> texturesSets = new LinkedList<BufferedImage[]>();
     
     private Random random;
 
@@ -70,6 +70,17 @@ public class TextureManager extends Utils{
         }
         return null;
     }
+    
+    public BufferedImage getTextureFromSheet(String title, int column, int row) {
+        for (int i = 0; i < spriteSheets.size(); i++) {
+            if (spriteSheets.get(i).getTitle().equals(title)) {
+                return spriteSheets.get(i).getTexture(column, row);
+            }
+        }
+        return null;
+    }
+    
+    
     public BufferedImage getRandomTextureFromSheet(String title) { 
         for (int i = 0; i < spriteSheets.size(); i++) {
             if (spriteSheets.get(i).getTitle().equals(title)) {

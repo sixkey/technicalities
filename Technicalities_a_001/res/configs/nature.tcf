@@ -1,2 +1,4 @@
-tree wood:3,leaf:4
-stone andezit:4
+n_tree i_wood:3,i_leaf:4
+n_stone i_andezit:4
+n_grass i_leaf:1
+n_cactus i_spikes:1

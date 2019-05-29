@@ -1,0 +1,5 @@
+item_spritesheet 16x16 3 3
+i_wood [0,0]:[0,0]
+i_stone [1,0]:[1,0]
+i_leaf [2,0]:[2,0]
+i_spikes [0,1]:[0,1]
