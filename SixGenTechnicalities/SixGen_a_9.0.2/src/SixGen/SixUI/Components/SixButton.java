@@ -154,7 +154,7 @@ public class SixButton extends SixComponent{
     }
 
     public void setTexture(BufferedImage texture) {
-        this.texture = texture;
+        this.texture = rescale(texture, (int)getWidth(), (int)getHeight());
     }
 
     public Font getFont() {

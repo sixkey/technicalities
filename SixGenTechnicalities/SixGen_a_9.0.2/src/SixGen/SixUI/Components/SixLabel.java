@@ -99,7 +99,7 @@ public class SixLabel extends SixComponent{
             if(font!=null) { 
                 drawTextWithAlign(g, text, font , getTextBounds(), textLocation);
             } else { 
-                drawTextWithAlign(g, text, g.getFont(), getTextBounds(), textLocation);
+                drawTextWithAlign(g, text, g.getFont().deriveFont(fontSize), getTextBounds(), textLocation);
             }
         }
     }

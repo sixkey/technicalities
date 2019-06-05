@@ -1,0 +1,3 @@
+es_solar [ta_solar:3] _
+es_burning [i_coal:5x3];[i_planks:1x4];[i_log:3x3] [fuel!_:3]
+es_cranking_table _ _

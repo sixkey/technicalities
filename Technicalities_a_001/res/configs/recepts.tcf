@@ -1,0 +1,3 @@
+r_planks 1 [i_log:1]>[i_planks:4]
+r_stick 1 [i_planks:2]>[i_stick:4]
+r_coal 4 [i_log:1]>[i_coal:1]

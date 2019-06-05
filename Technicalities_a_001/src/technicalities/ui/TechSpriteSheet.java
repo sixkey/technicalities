@@ -23,7 +23,7 @@ public class TechSpriteSheet extends SpriteSheet {
     
     private SpriteWrapper wrapper;
     
-    public TechSpriteSheet(String title) { 
+    public TechSpriteSheet(String title, double textureRatio) { 
         super(null, title, 0, 0);
         
         fm = new FileManager();
@@ -32,15 +32,13 @@ public class TechSpriteSheet extends SpriteSheet {
         
         
         
-        this.image = utils.rescale(fm.getImageFromClassSource(getClass(), "/textures/" + title + ".png"), 3);
+        this.image = utils.rescale(fm.getImageFromClassSource(getClass(), "/textures/" + title + ".png"), textureRatio);
         
         TextureConfigManager tcm = new TextureConfigManager(fm.getFileFromClassSource(getClass(), "/textures/" + title + ".texcf"));
         
         this.wrapper = tcm.spriteWrapper;
         this.columns = wrapper.columns;
         this.rows = wrapper.rows;
-        
-        System.out.println(wrapper);
         
         this.updateParcelBounds();
     }

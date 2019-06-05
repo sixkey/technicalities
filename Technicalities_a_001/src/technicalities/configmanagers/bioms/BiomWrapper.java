@@ -24,6 +24,7 @@ public class BiomWrapper implements ConfigWrapper {
     public final int propQuot;
     public final int terminateLayer;
     public final IDNumberPair[] naturePerChunk;
+    public final String tileTitle;
     
     /**
      * wrapper for bioms configuration and init
@@ -34,7 +35,7 @@ public class BiomWrapper implements ConfigWrapper {
      * @param propQuot quotient of the biom propagation sizing (q<1 -> lowering and q>1 -> growing)
      * @param terminateLayer layer at which the recursive generation cyclus ends
      */
-    public BiomWrapper(String id, int color, int spawnChance, int propChance, int propQuot, int terminateLayer, IDNumberPair[] natureAPerChunk) { 
+    public BiomWrapper(String id, String tileTitle, int color, int spawnChance, int propChance, int propQuot, int terminateLayer, IDNumberPair[] natureAPerChunk) { 
         this.id = id;
         this.color = color;
         this.spawnChance = spawnChance;
@@ -42,6 +43,7 @@ public class BiomWrapper implements ConfigWrapper {
         this.propQuot = propQuot;
         this.terminateLayer = terminateLayer;
         this.naturePerChunk = natureAPerChunk;
+        this.tileTitle = tileTitle;
     }
     
     @Override

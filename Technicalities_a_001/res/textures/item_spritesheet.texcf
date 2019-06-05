@@ -1,5 +1,10 @@
-item_spritesheet 16x16 3 3
-i_wood [0,0]:[0,0]
-i_stone [1,0]:[1,0]
-i_leaf [2,0]:[2,0]
-i_spikes [0,1]:[0,1]
+item_spritesheet 64x64 3 3
+i_log [0,0]:[0,0]
+i_planks [1,0]:[1,0]
+i_stick [2,0]:[2,0]
+i_stone [0,1]:[0,1]
+i_coal [1,1]:[1,1]
+i_leaf [2,1]:[2,1]
+i_apple [0,2]:[0,2]
+i_barry [1,2]:[1,2]
+i_spike [2,2]:[2,2]

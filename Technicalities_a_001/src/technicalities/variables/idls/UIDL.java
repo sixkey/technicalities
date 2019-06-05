@@ -13,5 +13,5 @@ import SixGen.Utils.ID;
  * @author filip
  */
 public enum UIDL implements ID {
-    healthbar
+    healthbar, inventoryGrid, playerInventory, itemUI, buildingUI, console, craftingStationUI, receptGrid, mainCanvasUI, energyCenterUI, energyUnitUI, energyBar
 }

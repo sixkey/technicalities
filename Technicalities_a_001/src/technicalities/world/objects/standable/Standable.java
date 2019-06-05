@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 import technicalities.ui.tui.HealthBar;
 import technicalities.world.World;
 import technicalities.world.objects.TObject;
-import technicalities.world.structure.Tile;
+import technicalities.world.handler.Tile;
 
 /**
  * Standable
@@ -24,7 +24,7 @@ public abstract class Standable extends TObject {
     protected World world;
     protected Tile tile;
     
-    protected BufferedImage texture;
+    protected BufferedImage sprite;
     
     ////// CONSTRUCTROS ////// 
     
@@ -39,12 +39,12 @@ public abstract class Standable extends TObject {
     
     ////// GETTERS SETTERS //////   
     
-    public void setTexture(BufferedImage texture) { 
-        this.texture = texture;
+    public void setSprite(BufferedImage sprite) { 
+        this.sprite = sprite;
     }
     
     public BufferedImage getTexture() { 
-        return texture;
+        return sprite;
     }
     
     

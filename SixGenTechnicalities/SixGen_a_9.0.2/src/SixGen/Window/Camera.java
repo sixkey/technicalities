@@ -121,6 +121,7 @@ public class Camera extends Utils implements FollowingInstance{
             shakeOffX = (float) (Math.sin(Math.toRadians(shakeCounter)) * shakeMagX);
             shakeOffY = (float) (Math.sin(Math.toRadians(shakeCounter)) * shakeMagY);
         }
+        x+=10;
         shakeCounter = (shakeCounter + 10)%360;
     }
    

@@ -24,6 +24,8 @@ public abstract class ConfigManager {
     public int SIZE;
     private Random random;
     
+    protected int lineCounter = 0;
+    
     public ConfigManager(InputStream configFile) {
         random = new Random();
         LinkedList<ConfigWrapper> hTypesList = new LinkedList<ConfigWrapper>();
@@ -35,7 +37,7 @@ public abstract class ConfigManager {
                 if(wrapper!=null) {
                     hTypesList.add(wrapper);
                 }
-                
+                lineCounter++;
                 line = br.readLine();
             }
         } catch (IOException ex) {
@@ -56,7 +58,12 @@ public abstract class ConfigManager {
     }
 
     public ConfigWrapper getWrapper(String title) {
-        return wrappers[getId(title)];
+        int id = getId(title);
+        if(id < 0) { 
+            return null;
+        } else { 
+            return wrappers[id];
+        }
     }
 
     public ConfigWrapper[] getWrappers() {
@@ -103,5 +110,14 @@ public abstract class ConfigManager {
 
     public String getTitle(int id) {
         return wrappers[id].getId();
+    }
+    
+    @Override
+    public String toString() { 
+        String result = String.valueOf(this.getClass()).toUpperCase() + "\n";
+        for (ConfigWrapper wrapper : wrappers) {
+            result += wrapper.toString() + "\n";
+        }
+        return result;
     }
 }

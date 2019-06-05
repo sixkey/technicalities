@@ -139,9 +139,7 @@ public abstract class SixCanvas extends Canvas {
     }
 
     public void mouseAction(MouseEvent e, MouseActionType action) {
-        if (action == MouseActionType.pressed) {
-            handler.mouseAction(e, action);
-        }
+        handler.mouseAction(e, action);
     }
 
     public void mouseWheelAction(MouseWheelEvent e) {

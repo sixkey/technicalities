@@ -35,15 +35,16 @@ public class BiomConfigManager extends ConfigManager {
         String[] words = line.split(" ");
         
         String id = words[0];
-        int c = Integer.parseInt(words[1],16);
-        int s = Integer.parseInt(words[2]);
-        int p = Integer.parseInt(words[3]);
-        int q = Integer.parseInt(words[4]);
-        int tl = Integer.parseInt(words[5]);
+        String tileTitle = words[1];
+        int c = Integer.parseInt(words[2],16);
+        int s = Integer.parseInt(words[3]);
+        int p = Integer.parseInt(words[4]);
+        int q = Integer.parseInt(words[5]);
+        int tl = Integer.parseInt(words[6]);
         
         IDNumberPair[] pairs;
         if(!words[6].equals("_")) {
-            String[] natureInfo = words[6].split(",");
+            String[] natureInfo = words[7].split(",");
             pairs = new IDNumberPair[natureInfo.length];
             for(int i = 0; i < natureInfo.length; i++) { 
                 String[] info = natureInfo[i].split(":");
@@ -53,7 +54,7 @@ public class BiomConfigManager extends ConfigManager {
             pairs = new IDNumberPair[0];
         }
         
-        return new BiomWrapper(id, c, s, p, q, tl, pairs);   
+        return new BiomWrapper(id, tileTitle, c, s, p, q, tl, pairs);   
     }
 
 }

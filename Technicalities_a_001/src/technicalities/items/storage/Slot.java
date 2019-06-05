@@ -4,9 +4,9 @@
 *  File inventory.storage / Slot
 *  created on 22.5.2019 , 18:39:02 
  */
-package technicalities.inventory.storage;
+package technicalities.items.storage;
 
-import technicalities.inventory.item.Item;
+import technicalities.items.item.Item;
 
 /**
  * Slot 
@@ -40,34 +40,74 @@ public class Slot {
     /**
      * tries to add the item to current slot, if item present tries to add, if empty tries to place
      * @param item
-     * @return 
+     * @return eveything that wasn't added
      */
     public Item add(Item item) { 
-        if(!isFree()) {
-            if(item.itemWrapper.id.equals(this.item.itemWrapper.id)) { 
-                int a = this.item.add(item.getAmount());
-                item.setAmount(a);
-                if(item.isEmpty()) { 
-                    return null;
+        if(item!=null) {
+            Item result = new Item(item.itemWrapper, item.getAmount());
+            if(!isFree()) {
+                if(result.itemWrapper.id.equals(this.item.itemWrapper.id)) { 
+                    int a = this.item.add(result.getAmount());
+                    result.setAmount(a);
+                    if(result.isEmpty()) { 
+                        return null;
+                    } else {
+                        return result;
+                    }
                 } else {
-                    return item;
+                    return result;
                 }
-            } else {
-                return item;
-            }
-        } else { 
-            if(compatible(item)) { 
-                this.item = item;
-                return null;
             } else { 
-                return item;
+                if(compatible(result)) { 
+                    this.item = result;
+                    return null;
+                } else { 
+                    return result;
+                }
+            } 
+        } else { 
+            return null;
+        }
+    }
+    
+    /**
+     * tries to remove from the item
+     * @param it
+     * @return everything that was removed
+     */
+    public Item remove(Item it) { 
+        if(isFree()) {
+            return null; 
+        } else { 
+            if(it.itemWrapper.id.equals(this.item.itemWrapper.id)) { 
+                int a = this.item.remove(it.getAmount());
+                if(this.item.isEmpty()) { 
+                    this.item = null;
+                }
+                Item result = new Item(it.itemWrapper, a);
+                return result;
+            } else { 
+                return null;
             }
         }
     }
    
+    public int howMuchCanTake(Item item) { 
+        if(isFree()) { 
+            if(compatible(item)) {
+                return item.itemWrapper.stackSize;
+            }
+        } else { 
+            if(this.item.itemWrapper.id.equals(item.itemWrapper.id)) { 
+                return this.item.itemWrapper.stackSize - this.item.getAmount();
+            }
+        }
+        return 0;
+    }
+    
     /**
      * checks if the item is compatible to current slot 
-     * --very bruteforced crosscheck
+     * TODO:very bruteforced crosscheck
      * @param item
      * @return returns if the item is compatible with the slot 
      */

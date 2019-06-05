@@ -4,20 +4,19 @@
 *  File handler / TechHandler
 *  created on 20.5.2019 , 19:10:04 
  */
-package technicalities.handler;
+package technicalities.world.handler;
 
 import SixGen.Handler.Handler;
 import SixGen.Window.SixCanvas;
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import technicalities.variables.globals.GlobalVariables;
+import technicalities.world.World;
 import technicalities.world.objects.TObject;
 import technicalities.world.objects.Tickable;
-import technicalities.world.objects.standable.Standable;
-import technicalities.world.structure.Chunk;
-import technicalities.world.structure.Tile;
+import technicalities.world.handler.Chunk;
+import technicalities.world.handler.Tile;
 
 /**
  * TechHandler
@@ -48,28 +47,42 @@ public class TechHandler extends Handler implements GlobalVariables{
     
     @Override 
     public void render(Graphics2D g) { 
-        // getting coridnates 
+        // getting coridnates of the chunks
+        int xcb, ycb, xce, yce;
+        
+        xcb = (int)(camera.getX() / CHUNKSIZE) - 2;
+        xce = (int)((camera.getX() + camera.getWidth()) / CHUNKSIZE) + 2;
+        ycb = (int)(camera.getY() / CHUNKSIZE) - 2;
+        yce = (int)((camera.getY() + camera.getHeight()) / CHUNKSIZE) + 2;
+        
+        xcb = Math.min(chunks.length, Math.max(0, xcb));
+        xce = Math.min(chunks.length, Math.max(0, xce));
+        ycb = Math.min(chunks[0].length, Math.max(0, ycb));
+        yce = Math.min(chunks[0].length, Math.max(0, yce));
+        
+        // getting cordinates of the tiles 
         int xb, yb, xe, ye;
+        int xbt, ybt, xet, yet;
         
-        xb = (int)(camera.getX() / CHUNKSIZE) - 2;
-        xe = (int)((camera.getX() + camera.getWidth()) / CHUNKSIZE) + 2;
-        yb = (int)(camera.getY() / CHUNKSIZE) - 2;
-        ye = (int)((camera.getY() + camera.getHeight()) / CHUNKSIZE) + 2;
-        
-        xb = Math.min(chunks.length, Math.max(0, xb));
-        xe = Math.min(chunks.length, Math.max(0, xe));
-        yb = Math.min(chunks[0].length, Math.max(0, yb));
-        ye = Math.min(chunks[0].length, Math.max(0, ye));
+        xb = (int)(camera.getX() / TILEWIDTH) - 2;
+        xe = (int)((camera.getX() + camera.getWidth()) / TILEWIDTH) + 2;
+        yb = (int)(camera.getY() / TILEHEIGHT) - 2;
+        ye = (int)((camera.getY() + camera.getHeight()) / TILEHEIGHT) + 2;
         
         //rendering visible tiles
-        for(int y = yb; y < ye; y++) { 
-            for(int x = xb; x < xe; x++) { 
-                chunks[y][x].render(g);
+        for(int y = ycb; y < yce; y++) { 
+            for(int x = xcb; x < xce; x++) { 
+                Chunk temp = chunks[y][x];
+                xbt = Math.min(TILESINCHUNK, Math.max(0, xb - x * TILESINCHUNK));
+                xet = Math.min(TILESINCHUNK, Math.max(0, xe - x * TILESINCHUNK));
+                ybt = Math.min(TILESINCHUNK, Math.max(0, yb - y * TILESINCHUNK));
+                yet = Math.min(TILESINCHUNK, Math.max(0, ye - y * TILESINCHUNK));
+                temp.render(g, xbt, xet, ybt, yet);
             }
         }
         //rendering objects and standables
-        for(int y = yb; y < ye; y++) { 
-            for(int x = xb; x < xe; x++) { 
+        for(int y = ycb; y < yce; y++) { 
+            for(int x = xcb; x < xce; x++) { 
                 chunks[y][x].frontRender(g);
             }
         }
@@ -110,9 +123,13 @@ public class TechHandler extends Handler implements GlobalVariables{
     public void addObject(TObject o) { 
         int cy = Math.floorDiv((int)o.getCenterY(), CHUNKSIZE);
         int cx = Math.floorDiv((int)o.getCenterX(), CHUNKSIZE);
-        System.out.println(cy + " " + cx);
-        
         chunks[cy][cx].addObject(o);
+    }
+    
+    public void removeObject(TObject o) { 
+        int cy = Math.floorDiv((int)o.getCenterY(), CHUNKSIZE);
+        int cx = Math.floorDiv((int)o.getCenterX(), CHUNKSIZE);
+        chunks[cy][cx].removeObject(o);
     }
     
     public Tile getTile(int x, int y) {
@@ -125,5 +142,9 @@ public class TechHandler extends Handler implements GlobalVariables{
         } else { 
             return null;
         }
+    }
+    
+    public Tile getTile(MouseEvent e, World world) { 
+        return world.getTileFromRealCords((int)getRealMouseX(e), (int)getRealMouseY(e));
     }
 }

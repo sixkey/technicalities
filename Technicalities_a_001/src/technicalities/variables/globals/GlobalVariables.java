@@ -15,15 +15,20 @@ public interface GlobalVariables {
     ///// WINDOW ///// 
     final int SCREENWIDTH = 1600, SCREENHEIGHT = 900;
     final String TITLE = "technicalities";
+    // INTERFACE
+    final int SLOTSIZE = 58;
+    final int INNERSLOTSIZE = 48;
+    final int SLOTMARGIN = 8;
     
     ///// WORLD  /////
     // TILES //
-    final int TILEWIDTH = 64, TILEHEIGHT = 64;
+    final double textureRatio = 6;
+    final int TILEWIDTH = (int)(16 * textureRatio), TILEHEIGHT = (int)(16 * textureRatio);
     // HANDLER //
-    final int WORLDSIZE = 3; //number^2 of chunks in world 
-    final int TILESINCHUNK = 16; //number of tiles in chunk
+    final int WORLDSIZE = 30; //number^2 of chunks in world 
+    final int TILESINCHUNK = 32; //number of tiles in chunk
     final int CHUNKSIZE = TILESINCHUNK * TILEWIDTH;
     // PLAYER //
-    final int PLAYER_SIZE = 32;
+    final int PLAYER_SIZE = (int)(16 * textureRatio);
     
 }

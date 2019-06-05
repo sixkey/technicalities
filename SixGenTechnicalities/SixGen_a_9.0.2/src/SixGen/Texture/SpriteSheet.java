@@ -25,9 +25,9 @@ public class SpriteSheet {
                 }
 	}
 	protected void updateParcelBounds() { 
-		parcelWidth = image.getWidth()/columns;
-		parcelHeight = image.getHeight()/rows;
-	}
+            parcelWidth = image.getWidth()/columns;
+            parcelHeight = image.getHeight()/rows;
+        }
         public BufferedImage[] getTextures() { 
             BufferedImage[] textures = new BufferedImage[columns * rows];
             int counter = 0;

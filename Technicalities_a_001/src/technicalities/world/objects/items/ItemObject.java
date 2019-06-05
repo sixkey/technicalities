@@ -6,7 +6,7 @@
  */
 package technicalities.world.objects.items;
 
-import technicalities.inventory.item.Item;
+import technicalities.items.item.Item;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import technicalities.variables.idls.OIDL;
@@ -18,13 +18,16 @@ import technicalities.world.objects.TObject;
  */
 public class ItemObject extends TObject{
     
-    private BufferedImage sprite;
     private Item item;
+    private BufferedImage sprite;
     
     public ItemObject(float centerX, float centerY, Item item) { 
         super(centerX, centerY, OIDL.item);
         this.item = item;
+        sprite = item.itemWrapper.sprite;
     }
+    
+    ////// METHODS //////   
     
     @Override
     public void render(Graphics2D g) { 
@@ -33,8 +36,22 @@ public class ItemObject extends TObject{
         }
     }
     
+    ////// GETTERS SETTERS //////   
+    
     public void setSprite(BufferedImage image) { 
         this.sprite = image;
+    }
+    
+    public void setItem(Item item) { 
+        this.item = item;
+    }
+    
+    public Item getItem() { 
+        return item;
+    }
+    
+    public String getTID() { 
+        return item.itemWrapper.id;
     }
     
 }

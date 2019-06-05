@@ -30,7 +30,7 @@ public class Timer {
         return 0 >= getDelta();
     }
     
-    public void newLap() {
+    public void reset() {
         this.start = System.currentTimeMillis();
     }
     

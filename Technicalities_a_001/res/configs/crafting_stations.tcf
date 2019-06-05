@@ -1,0 +1,7 @@
+cs_crafting_table [i_log:1] [es_cranking_table;es_solar] [_:3] [_:3]
+r_planks
+r_stick
+}
+cs_furnace [i_stone:3];[i_log:5] [es_burning] [_:3] [_:3]
+r_coal
+} 

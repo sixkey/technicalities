@@ -1,0 +1,5 @@
+tiles_spritesheet 32x32 3 3
+ti_grass [0,0]:[0,0]
+ti_dirt [1,0]:[1,0]
+ti_sand [2,0]:[2,0]
+ti_stone [0,1]:[0,1]

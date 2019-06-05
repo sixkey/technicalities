@@ -21,7 +21,7 @@ import java.util.LinkedList;
  */
 public abstract class SixComponent extends Utils implements GUIAnimation {
     
-    protected int fontSize;
+    protected float fontSize;
     protected Font font;
     protected float x , y;
     protected float width , height;
@@ -30,7 +30,7 @@ public abstract class SixComponent extends Utils implements GUIAnimation {
     protected float backgroundAlpha;
     protected float foregroundAlpha;
     protected LinkedList<SixAction> actionList = new LinkedList<SixAction>();
-    protected boolean visible = true;
+    protected boolean visible;
     protected AnimationType animationType;
     protected float targetX , targetY;
     
@@ -43,6 +43,8 @@ public abstract class SixComponent extends Utils implements GUIAnimation {
         backgroundAlpha = 1;
         foregroundAlpha = 1;
         alpha = 1;
+        fontSize = 20;
+        this.visible = true;
     }
     
     public abstract void acRender(Graphics2D g);
@@ -62,12 +64,13 @@ public abstract class SixComponent extends Utils implements GUIAnimation {
     }
     
     public boolean mouseAction(MouseEvent e, MouseActionType mat) {
-        if(visible & mat==MouseActionType.pressed) {
+        if(visible & mat==MouseActionType.pressed && this.getBounds().contains(e.getPoint())) {
             for(int i = 0 ; i < actionList.size() ; i++) { 
                 actionList.get(i).action();
             }
+            return true;
         }
-        return visible;
+        return false;
     }
     public Rectangle getBounds() {
         return new Rectangle((int)x ,(int)y , (int)width ,(int)height);
@@ -97,8 +100,20 @@ public abstract class SixComponent extends Utils implements GUIAnimation {
     public void setY(float y) {
         this.y = y;
     }
+    public void setCenterX(float xx) { 
+        setX(xx - getWidth() / 2);
+    }
+    public void setCenterY(float yy) { 
+        setY(yy - getHeight() / 2);
+    }
+    public void setXX(float xx) { 
+        setX(xx - getWidth());
+    }
     public float getXX() { 
         return x + width;
+    }
+    public void setYY(float yy) { 
+        setY(yy - getHeight());
     }
     public float getYY() { 
         return y + height;
@@ -120,8 +135,8 @@ public abstract class SixComponent extends Utils implements GUIAnimation {
     }
 
     public void setBounds(int x , int y , int width, int height) { 
-        this.x = x;
-        this.y = y;
+        setX(x);
+        setY(y);
         this.width = width;
         this.height = height;
     }
@@ -143,10 +158,10 @@ public abstract class SixComponent extends Utils implements GUIAnimation {
     public void toggleVisible() {
         setVisible(!visible);
     }
-    public void setFontSize(int fontSize) { 
+    public void setFontSize(float fontSize) { 
         this.fontSize = fontSize;
     }
-    public int getFontSize() { 
+    public float getFontSize() { 
         return fontSize;
     }
 

@@ -23,10 +23,36 @@ public abstract class TObject extends GameObject implements GlobalVariables{
     
     private int hp = 0;
     private int maxHP = 0;
+    private boolean dead = false;
+    protected int collisionRadius = 0;
     
     public TObject(float centerX, float centerY, ID id) { 
         super(centerX, centerY, id);
     }
+    
+    ////// METHODS //////   
+    
+    public void collision(TObject o) { 
+        
+    }
+    
+    public void bigTick() { 
+        
+    }
+    
+    //// DAMAGE AND DEATH
+    
+    public void damage(int damage) { 
+        this.hp = hp - damage;
+        if(hp<0) { 
+            hp = 0;
+            death();
+        }
+    }
+    
+    protected void death() {
+        dead = true;
+    }   
     
     ////// GETTERS SETTERS //////
     
@@ -38,17 +64,6 @@ public abstract class TObject extends GameObject implements GlobalVariables{
         this.hp = hp;
     }
     
-    public void damage(int damage) { 
-        this.hp = hp - damage;
-        if(hp<0) { 
-            hp = 0;
-            death();
-        }
-    }
-    
-    protected void death() {
-        
-    }   
     
     protected void setMaxHP(int maxHP) { 
         this.maxHP = maxHP;
@@ -62,4 +77,15 @@ public abstract class TObject extends GameObject implements GlobalVariables{
         return tui;
     }
     
+    public int getCollisionRadius() { 
+        return collisionRadius;
+    }
+    
+    public boolean isAlive() {
+        return !dead;
+    }
+    
+    public String getTID() { 
+        return null;
+    }
 }

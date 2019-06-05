@@ -7,6 +7,7 @@
 package technicalities.configmanagers.nature;
 
 import technicalities.configmanagers.ConfigWrapper;
+import technicalities.items.item.Item;
 
 /**
  * ItemWrapper 
@@ -17,21 +18,17 @@ public class NatureWrapper implements ConfigWrapper {
     
     //id - name of the item in id form
     public final String id;
-    //id of the items stored
-    public final String[] itemID;
-    //amount of the items stored
-    public final int[] itemAmount;
+    //items that drop
+    public Item[] items;
     
     /**
      * wrapper for item configuration and init
      * @param id name of the item in id form
-     * @param itemID id of the items stored
-     * @param itemAmount amount of the items stored
+     * @param items items that drop on destroy
      */
-    public NatureWrapper(String id, String[] itemID, int[] itemAmount) { 
+    public NatureWrapper(String id, Item[] items) { 
         this.id = id;
-        this.itemID = itemID;
-        this.itemAmount = itemAmount;
+        this.items = items;
     }
     
     @Override

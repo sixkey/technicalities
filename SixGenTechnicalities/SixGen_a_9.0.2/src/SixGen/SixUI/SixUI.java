@@ -20,6 +20,8 @@ public class SixUI extends SixComponent{
     protected ID Id;
     protected Color backgroundColor;
     
+    protected SixComponent exclusiveFocus;
+    
     public enum AligmentType {
         horizontal, vertical;
     }
@@ -48,9 +50,16 @@ public class SixUI extends SixComponent{
                 g2d.setComposite(getAlphaComposite(1f));
             }
             for (int i = 0; i < components.size(); i++) {
-                components.get(i).getAlphaComposite(alpha);
-                components.get(i).render(g);
-                components.get(i).getAlphaComposite(1);
+                SixComponent temp = components.get(i);
+                
+                if(temp != exclusiveFocus) {
+                    temp.getAlphaComposite(alpha);
+                    temp.render(g);
+                    temp.getAlphaComposite(1);
+                }
+            }
+            if(exclusiveFocus!=null) {
+                exclusiveFocus.render(g);
             }
             addRender(g);
         }
@@ -67,6 +76,11 @@ public class SixUI extends SixComponent{
     public void addComponent(SixComponent comp) {
         components.add(comp);
     }
+    
+    public void removeComponent(SixComponent comp) {
+        components.remove(comp);
+    }
+    
     public void addComponentRelative(SixComponent comp) { 
         comp.setX(comp.getX() + this.getX());
         comp.setY(comp.getY() + this.getY());
@@ -111,26 +125,23 @@ public class SixUI extends SixComponent{
         return getBounds().contains(e.getPoint());
     }
     
+    @Override
     public boolean mouseAction(MouseEvent e, MouseActionType mat) {
-        if(mat==MouseActionType.pressed || mat==MouseActionType.dragged) { 
-            return realMouseAction(e , mat);
-        } else {
+        if(visible) {
+            if(exclusiveFocus==null) {
+                for (int i = 0; i < components.size(); i++) {
+                    SixComponent temp = components.get(i);
+                    if(temp.mouseAction(e , mat)) {
+                        return true;
+                    }
+                }
+                return false;
+            } else {
+                return exclusiveFocus.mouseAction(e, mat);
+            }
+        } else { 
             return false;
         }
-    }
-
-    public boolean realMouseAction(MouseEvent e , MouseActionType mat) { 
-        Rectangle rect = new Rectangle(e.getX() - 1, e.getY() - 1, 3, 3);
-        boolean result = false;
-        for (int i = 0; i < components.size(); i++) {
-            SixComponent temp = components.get(i);
-            if (temp.getBounds().intersects(rect)) {
-                if(temp.mouseAction(e , mat)) {
-                    result = true;
-                }
-            }
-        }
-        return result;
     }
     
     public void AlignComponents(SixComponent component[], AligmentType type, int x, int y, int width, int height, int marginWidth, int marginHeight) {
@@ -405,12 +416,12 @@ public class SixUI extends SixComponent{
             height = amount * buttonHeight + (amount - 1) * margin;
             if(centered) { 
                 for (int i = 0; i < amount; i++) {
-                    SixButton button = new SixButton(action[i], x - width /2 , i * (buttonHeight + margin) - height / 2, buttonWidth, buttonHeight, texture[i]);
+                    SixButton button = new SixButton(action[i], x - width /2 , y + i * (buttonHeight + margin) - height / 2, buttonWidth, buttonHeight, texture[i]);
                     addComponent(button);
                 }
             } else { 
                 for (int i = 0; i < amount; i++) {
-                    SixButton button = new SixButton(action[i], x, i * (buttonHeight + margin), buttonWidth, buttonHeight, texture[i]);
+                    SixButton button = new SixButton(action[i], x, y + i * (buttonHeight + margin), buttonWidth, buttonHeight, texture[i]);
                     addComponent(button);
                 }
             }
@@ -731,6 +742,7 @@ public class SixUI extends SixComponent{
         }
         this.x = x;
     }
+    
     @Override
     public void setY(float y) {
         float delta = y - this.y;
@@ -809,9 +821,6 @@ public class SixUI extends SixComponent{
     @Override
     public void setVisible(boolean visible) {
         this.visible = visible;
-        for(int i = 0 ; i < components.size() ; i++) { 
-            components.get(i).setVisible(visible);
-        }
     }
     public ID getId() {
         return Id;

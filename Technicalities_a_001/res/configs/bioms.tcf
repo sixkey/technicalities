@@ -1,3 +1,3 @@
-b_forest 0a5713 10 600 900 5 n_tree:50,n_grass:50
-b_desert f3e49d 5 800 900 10 n_cactus:10
-b_stone 333333 2 900 900 8 n_stone:20
+b_forest ti_grass 0a5713 10 600 900 5 n_tree:50,n_grass:50
+b_desert ti_sand f3e49d 5 800 900 10 n_cactus:10
+b_stone ti_stone 333333 2 900 900 8 n_stone:20

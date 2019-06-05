@@ -18,5 +18,6 @@ import SixGen.Utils.ID;
 public enum OIDL implements ID{
     player,
     nature,
-    item
+    item,
+    craftingStation
 }

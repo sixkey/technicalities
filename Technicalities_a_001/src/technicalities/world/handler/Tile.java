@@ -4,9 +4,10 @@
 *  File world.structure / Tile
 *  created on 20.5.2019 , 19:11:46 
  */
-package technicalities.world.structure;
+package technicalities.world.handler;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import technicalities.variables.globals.GlobalVariables;
 import technicalities.world.objects.standable.Standable;
 
@@ -30,8 +31,8 @@ public class Tile implements GlobalVariables{
     
     // tile bg color
     public Color color;
-    // int id to the texture 
-    public int TID;
+ 
+    public BufferedImage sprite;
     
     // object standing on the tile
     public Standable standable;
@@ -63,6 +64,14 @@ public class Tile implements GlobalVariables{
     
     public Standable getStandable() { 
         return standable;
+    }
+    
+    public void setSprite(BufferedImage sprite) { 
+        this.sprite = sprite;
+    }
+    
+    public BufferedImage getSprite() { 
+        return sprite;
     }
     
 }

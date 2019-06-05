@@ -4,7 +4,7 @@
 *  File world.objects.items / Item
 *  created on 21.5.2019 , 23:04:47 
  */
-package technicalities.inventory.item;
+package technicalities.items.item;
 
 import technicalities.configmanagers.items.ItemWrapper;
 
@@ -35,7 +35,22 @@ public class Item {
     }
     
     
-    ////// VARIABLES ////// 
+    ////// METHODS ////// 
+    
+    public static Item copy(Item item) { 
+        if(item == null) return null;
+        Item copy = new Item(item.itemWrapper, item.getAmount());
+        return copy;
+    }
+    
+    public static Item[] copy(Item[] items) { 
+        if(items == null) return null;
+        Item[] temp = new Item[items.length];
+        for(int i = 0 ; i < items.length; i++) { 
+            temp[i] = Item.copy(items[i]);
+        }
+        return temp;
+    }
     
     /**
      * @param amount amount that we want to add 
@@ -54,11 +69,11 @@ public class Item {
     
     /**
      * @param amount amount we want to remove
-     * @return amount we reamoved or gathered from the item
+     * @return amount we removed or gathered from the item
      */
     public int remove(int amount) { 
         int a = Math.min(this.amount, amount);
-        amount-=a;
+        this.amount-=a;
         return a;
     }
     

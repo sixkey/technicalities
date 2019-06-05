@@ -1,4 +1,9 @@
-i_wood 64 wood,fuel
+i_log 64 wood,fuel
+i_planks 64 wood,fuel
+i_stick 64 wood,fuel
+i_stone 64 stone
+i_coal 64 fuel
 i_leaf 64 fuel
-i_andezit 64 stone
-i_spikes 64 wood,fuel 
+i_apple 64 fruit,food
+i_barry 64 fruit,food
+i_spike 64 wood,fuel 

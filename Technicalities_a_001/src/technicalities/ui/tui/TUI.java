@@ -8,12 +8,13 @@ package technicalities.ui.tui;
 
 import SixGen.SixUI.SixUI;
 import SixGen.Utils.ID;
+import technicalities.variables.globals.GlobalVariables;
 
 /**
  *
  * @author filip
  */
-public class TUI extends SixUI {
+public class TUI extends SixUI implements GlobalVariables {
     
     public TUI(ID id) {
         super(id);

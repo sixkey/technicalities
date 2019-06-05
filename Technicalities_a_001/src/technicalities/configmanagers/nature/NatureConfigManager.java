@@ -9,6 +9,8 @@ package technicalities.configmanagers.nature;
 import technicalities.configmanagers.ConfigManager;
 import technicalities.configmanagers.ConfigWrapper;
 import java.io.InputStream;
+import technicalities.configmanagers.CommonTranslation;
+import technicalities.items.item.Item;
 
 /**
  * NatureConfigManager
@@ -35,17 +37,10 @@ public class NatureConfigManager extends ConfigManager {
         
         String id = words[0];
         
-        String[] resources = words[1].split(",");
-        String[] itemID = new String[resources.length];
-        int[] itemAmount = new int[resources.length];
+        String itemsInString = words[1];
+        Item[] items = CommonTranslation.toItems(itemsInString);
         
-        for(int i = 0; i < resources.length; i++) { 
-            String[] inf = resources[i].split(":");
-            itemID[i] = inf[0];
-            itemAmount[i] = Integer.parseInt(inf[1]);
-        }
-        
-        return new NatureWrapper(id, itemID, itemAmount);
+        return new NatureWrapper(id, items);
     }
     
 }

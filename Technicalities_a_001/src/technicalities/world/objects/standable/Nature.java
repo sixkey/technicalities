@@ -6,10 +6,12 @@
  */
 package technicalities.world.objects.standable;
 
+import technicalities.configmanagers.items.ItemWrapper;
 import technicalities.configmanagers.nature.NatureWrapper;
+import technicalities.items.item.Item;
 import technicalities.variables.idls.OIDL;
 import technicalities.world.World;
-import technicalities.world.structure.Tile;
+import technicalities.world.handler.Tile;
 
 /**
  * Nature
@@ -18,17 +20,34 @@ import technicalities.world.structure.Tile;
  */
 public class Nature extends Standable{
  
+    ////// VARIABLES ////// 
+    
+    //wrapper of all information
     public NatureWrapper natureWrapper;
+    
+    ////// CONSTRUCTORS //////
     
     public Nature(NatureWrapper natureWrapper, Tile tile, World world) { 
         super(tile, world, OIDL.nature);
         this.natureWrapper = natureWrapper;
     }
     
+    ////// METHODS //////
+    
     @Override
     public void death() { 
-        world.dropItems(natureWrapper.itemID, natureWrapper.itemAmount, (int)getCenterX(), (int)getCenterY());
-        this.tile.setStandable(null);
+        if(isAlive()) { 
+            super.death();
+            world.dropItems(Item.copy(natureWrapper.items), (int)getCenterX(), (int)getCenterY());
+            this.tile.setStandable(null);
+        }
+    }
+    
+    ////// GETTERS SETTERS //////   
+    
+    @Override
+    public String getTID() { 
+        return natureWrapper.id;
     }
     
 }

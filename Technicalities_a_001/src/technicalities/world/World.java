@@ -10,19 +10,22 @@ import SixGen.Utils.Utils;
 import technicalities.configmanagers.ConfigWrapper;
 import technicalities.configmanagers.IDNumberPair;
 import technicalities.configmanagers.bioms.BiomWrapper;
-import technicalities.configmanagers.items.ItemWrapper;
 import technicalities.configmanagers.nature.NatureConfigManager;
 import technicalities.configmanagers.nature.NatureWrapper;
-import technicalities.inventory.item.Item;
+import technicalities.items.item.Item;
 import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 import technicalities.variables.globals.GlobalVariables;
 import technicalities.world.generators.BiomMapGenerator;
-import technicalities.handler.TechHandler;
+import technicalities.world.handler.TechHandler;
+import technicalities.world.objects.TObject;
+import technicalities.world.objects.creatures.Player;
 import technicalities.world.objects.items.ItemObject;
 import technicalities.world.objects.standable.Nature;
-import technicalities.world.structure.Chunk;
-import technicalities.world.structure.Tile;
+import technicalities.world.handler.Chunk;
+import technicalities.world.handler.Tile;
 
 /**
  * World
@@ -39,6 +42,7 @@ public class World implements GlobalVariables {
     private BiomMapGenerator BMG;
     
     private Random random;
+    public Player player;
     
     ////// CONSTRUCTORS ////// 
     
@@ -80,6 +84,12 @@ public class World implements GlobalVariables {
         for(int y = 0; y < height; y++) { 
             for(int x = 0; x < width; x++) { 
                 Tile t = new Tile(x, y);
+                BiomWrapper w = BMG.getBiomWrapper(biommap[y][x]);
+                if(w!=null) {
+                    BufferedImage sprite = technicalities.Technicalities.TTM.getRandomTexture(w.tileTitle);
+                    if(sprite!=null) t.setSprite(sprite);
+                }
+                
                 t.setColor(biommap[y][x] != 0 ? new Color(biommap[y][x]) : utils.randomColor(100,101,180,200,100,101));
                 chunks[y / TILESINCHUNK][x / TILESINCHUNK].tiles[y % TILESINCHUNK][x % TILESINCHUNK] = t;
             }
@@ -92,14 +102,13 @@ public class World implements GlobalVariables {
             BiomWrapper w = (BiomWrapper)wrappers[i];
             IDNumberPair[] npc = w.naturePerChunk;
             for(IDNumberPair p : npc) { 
-                System.out.println(p.id);
                 for(int j = 0; j < (width*height*p.amount)/256; j++) { 
                     int nx = random.nextInt(width);
                     int ny = random.nextInt(height);
                     Tile temp = chunks[ny / TILESINCHUNK][nx / TILESINCHUNK].tiles[ny % TILESINCHUNK][nx % TILESINCHUNK];
                     if(temp.color.getRGB() == new Color(w.color).getRGB()) { 
                         Nature nature = new Nature((NatureWrapper)NCM.getWrapper(p.id), temp, this);
-                        nature.setTexture(technicalities.Technicalities.TTM.getRandomTexture(p.id));
+                        nature.setSprite(technicalities.Technicalities.TTM.getRandomTexture(p.id));
                         temp.setStandable(nature);
                     }
                 }
@@ -111,27 +120,36 @@ public class World implements GlobalVariables {
     
     /**
      * spawns items in random positions 
-     * @param ids
-     * @param amounts
+     * @param items
      * @param x
      * @param y 
      * TODO:
      * better spawning sytem
      */
-    public void dropItems(String[] ids, int[] amounts, int x, int y) { 
-        for(int i = 0 ; i < ids.length; i++) { 
-            
+    public void dropItems(Item items[], int x, int y) { 
+        for(int i = 0 ; i < items.length; i++) { 
             int xx = random.nextInt(TILEWIDTH * 2) - TILEWIDTH + x;
             int yy = random.nextInt(TILEHEIGHT * 2) - TILEHEIGHT + y;
-            
-            ItemObject io = new ItemObject(xx, yy, new Item((ItemWrapper)technicalities.Technicalities.ICM.getWrapper(ids[i]),
-                                                    amounts[i]));
-            io.setSprite(technicalities.Technicalities.TTM.getRandomTexture(ids[i]));
+            ItemObject io = new ItemObject(xx, yy, items[i]);
+            io.setSprite(items[i].itemWrapper.sprite);
             handler.addObject(io);
         }
     }
     
     ////// GETTERS SETTERS //////   
+    
+    public void add(TObject object) { 
+        handler.addObject(object);
+    }
+    
+    public void remove(TObject object) { 
+        handler.removeObject(object);
+    }
+    
+    public Tile getTile(MouseEvent e) { 
+        return handler.getTile(e, this);
+    }
+    
     public int getTileX(Tile tile) { 
         return tile.x * TILEWIDTH;
     }

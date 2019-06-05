@@ -4,14 +4,13 @@
 *  File world.structure / Layer
 *  created on 20.5.2019 , 19:11:35 
  */
-package technicalities.world.structure;
+package technicalities.world.handler;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Comparator;
-import technicalities.handler.TechHandler;
 import technicalities.variables.globals.GlobalVariables;
 import static technicalities.variables.globals.GlobalVariables.TILEHEIGHT;
 import static technicalities.variables.globals.GlobalVariables.TILEWIDTH;
@@ -37,6 +36,9 @@ public class Chunk implements GlobalVariables{
     public int cx, cy;
     public TechHandler handler;
     
+    private int bigTickCounter;
+    private int bigTickInterval;
+    
     ////// CONSTRUCTORS //////
     
     public Chunk(TechHandler handler, int cx, int cy, int width, int height) { 
@@ -51,20 +53,31 @@ public class Chunk implements GlobalVariables{
             tiles[i] = new Tile[width];
         }
         objects = new ArrayList<>();
+        
+        bigTickCounter = 0;
+        bigTickInterval = 30;
     }
     
     /**
-     * rendering tiles 
+     * rendering tiles
      * @param g 
+     * @param xb x coridnate of the beggining array using this.array indexes (0 ... CHUNKSIZE) not the world
+     * @param xe x coridnate of the end array using this.array indexes (0 ... CHUNKSIZE) not the world
+     * @param yb y coridnate of the beggining array using this.array indexes (0 ... CHUNKSIZE) not the world
+     * @param ye y coridnate of the end array using this.array indexes (0 ... CHUNKSIZE) not the world
      */
-    public void render(Graphics2D g) { 
+    public void render(Graphics2D g, int xb, int xe, int yb, int ye) { 
         //rendering visible tiles
-        for(int y = 0; y < height; y++) { 
-            for(int x = 0; x < width; x++) { 
+        for(int y = yb; y < ye; y++) { 
+            for(int x = xb; x < xe; x++) { 
                 Tile t = tiles[y][x];
                 //rendering tile
-                g.setColor(t.color);
-                g.fillRect(x * TILEWIDTH + cx * CHUNKSIZE, y * TILEHEIGHT + cy * CHUNKSIZE, TILEWIDTH, TILEHEIGHT);
+                if(t.getSprite()!=null) {
+                    g.drawImage(t.getSprite(), x * TILEWIDTH + cx * CHUNKSIZE, y * TILEHEIGHT + cy * CHUNKSIZE, null);
+                } else {
+                    g.setColor(t.color);
+                    g.fillRect(x * TILEWIDTH + cx * CHUNKSIZE, y * TILEHEIGHT + cy * CHUNKSIZE, TILEWIDTH, TILEHEIGHT);
+                }
             }
         }
     }
@@ -107,9 +120,37 @@ public class Chunk implements GlobalVariables{
         }
     }
     
-    public void tick() { 
+    /**
+     * TODO: objects tick twice while moving 
+     */
+    public void tick() {
+        if(bigTickCounter >= bigTickInterval) { 
+            for(int y = 0; y < height; y++) { 
+                for(int x = 0; x < width; x++) { 
+                    Standable s = tiles[y][x].getStandable();
+                    if(s!=null) { 
+                        s.bigTick();
+                    }
+                }
+            }
+            bigTickCounter = 0;
+        } 
+        
+        bigTickCounter++;
+        
         for(int i = 0; i < objects.size(); i++) { 
             TObject temp = objects.get(i);
+            for(int j = 0; j < objects.size(); j++) { 
+                if(i != j) {
+                    TObject b = objects.get(j);
+                    double ac = Math.abs(temp.getCenterX() - b.getCenterX());
+                    double cb = Math.abs(temp.getCenterY() - b.getCenterY());
+                    double distance = Math.hypot(ac, cb);
+                    if(distance <= temp.getCollisionRadius()) {
+                        temp.collision(b);
+                    }
+                }
+            }
             temp.tick();
             if(Math.floorDiv((int)temp.getCenterX(), CHUNKSIZE) != cx || Math.floorDiv((int)temp.getCenterY(), CHUNKSIZE) != cy) { 
                 this.removeObject(temp);

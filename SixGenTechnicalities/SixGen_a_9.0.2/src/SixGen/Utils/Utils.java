@@ -365,6 +365,7 @@ public abstract class Utils {
     }
 
     public void drawTextWithAlign(Graphics g, String s, Font font, Rectangle rect, int margin, TextLocation textLocation) {
+        Font recFont = g.getFont();
         g.setFont(font);
         int x = 0, y = 0;
         FontMetrics fm = g.getFontMetrics(g.getFont());
@@ -415,6 +416,7 @@ public abstract class Utils {
                 g.drawString(lines[i], x, y);
             }
         }
+        g.setFont(recFont);
     }
 
     public void drawTextWithAlign(Graphics g, String s, int fontSize, Rectangle rect, int margin, TextLocation textLocation) {

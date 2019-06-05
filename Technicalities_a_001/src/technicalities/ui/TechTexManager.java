@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
+import technicalities.variables.globals.GlobalVariables;
 
 /**
  * TechTexManager
@@ -26,7 +27,7 @@ import java.util.Random;
  * - better search algorithm
  * - merging ItemTextureWrappers with same itemId
  */
-public class TechTexManager extends TextureManager {
+public class TechTexManager extends TextureManager implements GlobalVariables {
     
     ////// VARIABLES //////     
     
@@ -38,16 +39,15 @@ public class TechTexManager extends TextureManager {
     
     public TechTexManager() { 
         FileManager fm = new FileManager();
-        //getting nontech textures
-        SpriteSheet[] sheets = {
-            new SpriteSheet(fm.getImageFromClassSource(getClass(), "/textures/tiles.png"), "tiles", 3, 3),
-        };
-        
         //gettting tech textures
         
         TechSpriteSheet[] techSheets = { 
-            new TechSpriteSheet("nature_spritesheet"),
-            new TechSpriteSheet("item_spritesheet")    
+            new TechSpriteSheet("nature_spritesheet", textureRatio),
+            new TechSpriteSheet("craftingstation_spritesheet", textureRatio * 0.3f),
+            new TechSpriteSheet("player", textureRatio),
+            new TechSpriteSheet("item_spritesheet", textureRatio/4),
+            new TechSpriteSheet("tiles_spritesheet", textureRatio/2),
+            
         };
         
         //opening tech textures
@@ -67,15 +67,7 @@ public class TechTexManager extends TextureManager {
         //random init
         random = new Random();
         
-        //adding textures to the manager
-        this.addSpriteSheets(sheets);
         this.addSpriteSheets(techSheets);
-        
-        System.out.println("TEX");
-        
-        for(SpriteSheet s :spriteSheets) { 
-            System.out.println(s.getTitle());
-        }
     }
     
     /**

@@ -23,6 +23,8 @@ public class BiomMapGenerator {
     private BiomConfigManager BCM;
     private Random random;
     
+    private ConfigWrapper[] wrappers;
+    
     ////// CONSTRUCTROS //////  
     
     public BiomMapGenerator(BiomConfigManager BCM) { 
@@ -45,7 +47,7 @@ public class BiomMapGenerator {
             map[y] = new int[width];
         }
         //wrappers gather
-        ConfigWrapper[] wrappers = BCM.getWrappers();
+        wrappers = BCM.getWrappers();
         
         
         for(int i = 0; i < wrappers.length; i++) { 
@@ -95,6 +97,14 @@ public class BiomMapGenerator {
                 }
             }
         }
-        
+    }
+    
+    public BiomWrapper getBiomWrapper(int color) { 
+        for(ConfigWrapper w : wrappers) { 
+            if(((BiomWrapper)w).color == color) { 
+                return (BiomWrapper)w;
+            }
+        }
+        return null;
     }
 }

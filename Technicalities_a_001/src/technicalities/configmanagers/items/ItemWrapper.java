@@ -6,6 +6,7 @@
  */
 package technicalities.configmanagers.items;
 
+import java.awt.image.BufferedImage;
 import technicalities.configmanagers.ConfigWrapper;
 
 /**
@@ -22,6 +23,8 @@ public class ItemWrapper implements ConfigWrapper {
     //max amount of the item in one place or stacksize
     public final int stackSize;
     
+    public final BufferedImage sprite;
+    
     /**
      * wrapper for item configuration and init
      * @param id name of the item in id form
@@ -34,6 +37,7 @@ public class ItemWrapper implements ConfigWrapper {
         this.id = id;
         this.tags = tags;
         this.stackSize = stackSize;
+        this.sprite = technicalities.Technicalities.TTM.getRandomTexture(id);
     }
     
     @Override
